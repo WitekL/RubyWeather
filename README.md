@@ -1,4 +1,4 @@
-To run this app simply type ```ruby WeatherApp.rb <city> <country>```. You'll receive the current parameters for the given 
+To run this app simply type ```ruby WeatherApp.rb <city> <country>```. You'll receive the current conditions for the given 
 location.
 
 
