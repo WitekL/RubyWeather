@@ -3,27 +3,21 @@ require 'nokogiri'
 require 'pry'
 require 'httparty'
 
-# TODO get command line arguments (city, state) DONE
-# TODO match the input state with the code obtained from wiki DONE
-# TODO fetch json from openweathermap DONE
-# TODO parse the json and present the data to the user DONE
 
-arguments = Array.new
-ARGV.each do |arg|
-  arguments.push(arg)
-end
-city = arguments[0]
-state = arguments[1]
+city = ARGV[0]
+state = ARGV[1]
 
 page_countries = HTTParty.get('https://en.wikipedia.org/wiki/ISO_3166-1')
 
 countries = Hash.new
 parse_page = Nokogiri::HTML(page_countries)
-parse_page.xpath('//table[@class = "wikitable sortable"]/tr').each_with_index do |row, i|
+parse_page.xpath('//table[@class = "wikitable sortable"]/tr').each do |row|
   first_column = row.xpath('td/a/text()')[0].to_s
   second_column = row.xpath('td/a/text()')[1].to_s.split(':')[1]
   countries.store(first_column, second_column)
 end
+
+
 
 state_code = countries.fetch(state)
 
